@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Générateur de Numéros</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: radial-gradient(circle, #000020, #000); /* Dark space-like background */
+      color: white;
+      text-align: center;
+      padding: 20px;
+      overflow: hidden; /* Ensures stars stay in the viewport */
+      position: relative;
+    }
+
+    /* Stars animation */
+    .star {
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      width: 2px;
+      height: 2px;
+      opacity: 0;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+      animation: twinkle 5s infinite;
+    }
+
+    .star.small { width: 1px; height: 1px; }
+    .star.large { width: 3px; height: 3px; }
+
+    @keyframes twinkle {
+      0% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+      100% { opacity: 0.2; transform: scale(1); }
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+      width: 350px;
+      margin: auto;
+      animation: fadeIn 1s ease-in-out;
+      z-index: 10; /* Keep container above the stars */
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    input, select, button {
+      padding: 12px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #ff4747;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #e63b3b;
+    }
+
+    .output {
+      margin-top: 20px;
+      animation: resultAnimation 1.5s infinite;
+    }
+
+    @keyframes resultAnimation {
+      0% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 0.8; transform: scale(1); }
+    }
+
+    h1 {
+      font-size: 24px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    }
+
+    p {
+      font-size: 18px;
+      margin: 10px;
+      color: #ffd700;
+    }
+
+    /* Randomly placing stars in the background */
+    .star {
+      position: absolute;
+      background-color: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    .star.small {
+      width: 2px;
+      height: 2px;
+    }
+
+    .star.large {
+      width: 4px;
+      height: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Stars -->
+  <div class="star small" style="top: 10%; left: 20%;"></div>
+  <div class="star large" style="top: 15%; left: 75%;"></div>
+  <div class="star small" style="top: 40%; left: 50%;"></div>
+  <div class="star large" style="top: 60%; left: 20%;"></div>
+  <div class="star small" style="top: 70%; left: 80%;"></div>
+
+  <div class="container">
+    <h1>Générateur de Numéros</h1>
+
+    <label for="numCount">Combien de numéros:</label>
+    <select id="numCount">
+      <option value="5">5 Numéros</option>
+      <option value="6">6 Numéros</option>
+    </select>
+
+    <label for="starCount">Combien de chances/étoiles:</label>
+    <select id="starCount">
+      <option value="1">1 Étoile</option>
+      <option value="2">2 Étoiles</option>
+    </select>
+
+    <label for="numRange">Valeur max des numéros:</label>
+    <input type="number" id="numRange" min="1" value="50">
+
+    <label for="starRange">Valeur max des étoiles:</label>
+    <input type="number" id="starRange" min="1" value="12">
+
+    <button onclick="generateNumbers()">Générer</button>
+
+    <div class="output" id="output"></div>
+  </div>
+
+  <script>
+    function generateNumbers() {
+      const numCount = document.getElementById('numCount').value;
+      const starCount = document.getElementById('starCount').value;
+      const numRange = document.getElementById('numRange').value;
+      const starRange = document.getElementById('starRange').value;
+      
+      let numbers = [];
+      let stars = [];
+
+      // Generate random numbers
+      for (let i = 0; i < numCount; i++) {
+        let randomNumber = Math.floor(Math.random() * numRange) + 1;
+        numbers.push(randomNumber);
+      }
+
+      // Generate random stars
+      for (let i = 0; i < starCount; i++) {
+        let randomStar = Math.floor(Math.random() * starRange) + 1;
+        stars.push(randomStar);
+      }
+
+      // Display results
+      document.getElementById('output').innerHTML = 
+        `<h3>Numéros Gagnants:</h3>
+         <p>${numbers.join(', ')}</p>
+         <h3>Étoiles:</h3>
+         <p>${stars.join(', ')}</p>`;
+    }
+  </script>
+
+</body>
+</html>
